@@ -21,8 +21,8 @@
     body {
       font-family: 'Inter', sans-serif;
       -webkit-font-smoothing: antialiased;
-      background: #ebebeb;
-      color: #111;
+      background: #111;
+      color: #fff;
     }
 
     a {
@@ -47,6 +47,32 @@
       min-height: 680px;
     }
 
+    .screen-1--full {
+      overflow: hidden;
+    }
+
+    .hero-full {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-tagline {
+      position: absolute;
+      bottom: 200px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(14px, 1.4vw, 18px);
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0;
+    }
+
     .main {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -66,15 +92,58 @@
       letter-spacing: 0.02em;
     }
 
-    .logo {
-      position: absolute;
-      top: 28px;
-      left: 100%;
-      transform: translateX(-50%);
-      z-index: 3;
-      height: clamp(96px, 12vw, 160px);
-      width: auto;
+    .logo-wrapper {
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
       pointer-events: none;
+      will-change: top, padding, background, backdrop-filter;
+      transition: padding 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.4s ease,
+                  backdrop-filter 0.4s ease;
+    }
+
+    .logo-wrapper.at-hero {
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    .logo-wrapper.at-nav {
+      top: 0;
+      transform: none;
+      padding: 20px 0 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.45) 0%,
+        rgba(0, 0, 0, 0.25) 50%,
+        transparent 100%
+      );
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    }
+
+    .logo {
+      width: auto;
+      transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .logo-wrapper.at-hero .logo {
+      height: clamp(195px, 27vw, 360px);
+    }
+
+    .logo-wrapper.at-nav .logo {
+      height: clamp(48px, 6vw, 72px);
     }
 
     .hero-image {
@@ -182,8 +251,9 @@
        Section — The Concept
     ──────────────────────────────────────── */
     .section-concept {
-      background: #fff;
-      padding: 120px 40px;
+      background: #111;
+      color: #fff;
+      padding: 200px 40px;
     }
 
     .concept-label {
@@ -191,17 +261,17 @@
       font-weight: 400;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(17, 17, 17, 0.45);
+      color: rgba(255, 255, 255, 0.45);
       margin-bottom: 48px;
     }
 
     .concept-heading {
       font-weight: 500;
-      font-size: clamp(36px, 5vw, 72px);
+      font-size: clamp(52px, 7.2vw, 103px);
       letter-spacing: -0.02em;
       line-height: 1.1;
       margin-bottom: 48px;
-      max-width: 700px;
+      max-width: 840px;
     }
 
     .concept-body {
@@ -211,11 +281,11 @@
     }
 
     .concept-text {
-      font-size: 17px;
+      font-size: 24px;
       font-weight: 400;
       line-height: 1.7;
-      color: rgba(17, 17, 17, 0.7);
-      max-width: 560px;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 600px;
     }
 
     /* ────────────────────────────────────────
@@ -223,8 +293,8 @@
     ──────────────────────────────────────── */
     .photo-break {
       width: 100%;
-      height: 60vh;
-      min-height: 360px;
+      height: 85vh;
+      min-height: 500px;
       overflow: hidden;
     }
 
@@ -295,13 +365,25 @@
        Section — The Club
     ──────────────────────────────────────── */
     .section-club {
-      background: #111;
+      background: #111 url('img/man.png') center / cover no-repeat;
       color: #fff;
       padding: 120px 40px;
+      position: relative;
     }
+
+    .section-club::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+    }
+
 
     .club-header {
       margin-bottom: 80px;
+      position: relative;
+      z-index: 1;
     }
 
     .club-label {
@@ -324,12 +406,19 @@
     .club-zones {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 1;
     }
 
     .zone {
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      padding-top: 32px;
+      padding: 32px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .zone:last-child {
+      border-right: none;
     }
 
     .zone-number {
@@ -416,7 +505,8 @@
        Section — Activities
     ──────────────────────────────────────── */
     .section-activities {
-      background: #ebebeb;
+      background: #111;
+      color: #fff;
       padding: 120px 40px;
     }
 
@@ -429,7 +519,7 @@
       font-weight: 400;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(17, 17, 17, 0.45);
+      color: rgba(255, 255, 255, 0.4);
       margin-bottom: 48px;
     }
 
@@ -447,7 +537,7 @@
     }
 
     .activity {
-      border-top: 1px solid rgba(17, 17, 17, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
       padding-top: 28px;
     }
 
@@ -462,14 +552,15 @@
       font-size: 15px;
       font-weight: 400;
       line-height: 1.7;
-      color: rgba(17, 17, 17, 0.6);
+      color: rgba(255, 255, 255, 0.55);
     }
 
     /* ────────────────────────────────────────
        Section — Get in Touch
     ──────────────────────────────────────── */
     .section-contact {
-      background: #fff;
+      background: #111;
+      color: #fff;
       padding: 120px 40px;
       text-align: center;
     }
@@ -479,7 +570,7 @@
       font-weight: 400;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(17, 17, 17, 0.45);
+      color: rgba(255, 255, 255, 0.4);
       margin-bottom: 48px;
     }
 
@@ -495,7 +586,7 @@
       font-size: 17px;
       font-weight: 400;
       line-height: 1.7;
-      color: rgba(17, 17, 17, 0.6);
+      color: rgba(255, 255, 255, 0.55);
       max-width: 560px;
       margin: 0 auto 48px;
     }
@@ -505,8 +596,8 @@
       font-weight: 500;
       font-size: clamp(20px, 2.4vw, 32px);
       letter-spacing: -0.01em;
-      color: #111;
-      border-bottom: 1.5px solid #111;
+      color: #fff;
+      border-bottom: 1.5px solid #fff;
       padding-bottom: 4px;
       transition: opacity 0.3s;
     }
@@ -521,52 +612,29 @@
     .footer {
       background: #000;
       color: #fff;
-      padding: 80px 40px 28px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 120px;
-    }
-
-    .footer-col-title {
-      font-size: clamp(36px, 5vw, 72px);
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-    }
-
-    .footer-links {
-      list-style: none;
+      padding: 20px 40px;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 24px;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .footer-links a {
-      font-size: 15px;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.5);
-      transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    .footer-left {
+      display: flex;
+      gap: 16px;
+      align-items: center;
     }
 
-    .footer-links a:hover {
-      color: #fff;
-      opacity: 1;
+    .footer-location {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .footer-tagline {
-      margin-top: 40px;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.35);
-      letter-spacing: 0.02em;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
     }
 
     .footer-copy {
-      margin-top: 8px;
       font-size: 12px;
       color: rgba(255, 255, 255, 0.25);
     }
@@ -700,34 +768,16 @@
   </style>
 </head>
 <body>
+  <div class="logo-wrapper">
+    <img src="img/logo-web.png" alt="Club Court" class="logo">
+  </div>
+
   <div class="page">
 
     <!-- ═══ Screen 1 — Hero ═══ -->
-    <div class="screen-1">
-      <div class="main">
-        <div class="panel-dark">
-          <a href="#about" class="nav-link">About the club</a>
-          <img src="img/logopadel.png" alt="Club Court" class="logo">
-        </div>
-
-        <div class="hero-image">
-          <img
-            src="img/pareja.png"
-            alt="Padel players in action"
-          >
-          <a href="#contact" class="nav-link notify-link">Join the Court</a>
-        </div>
-
-        <div class="panel-events">
-          <h2 class="events-title">Opening 2026</h2>
-          <div class="events-details">
-            <p class="events-schedule">Dubai</p>
-            <p class="events-description">Social padel, rotating matches, DJ sets, and post-game drinks.</p>
-          </div>
-        </div>
-      </div>
-
-      <a href="#about" class="cta cta-button">About club</a>
+    <div class="screen-1 screen-1--full">
+      <img src="img/main-pht.png" alt="Clubcourt" class="hero-full">
+      <p class="hero-tagline">Padel is the Game</p>
     </div>
 
     <!-- ═══ The Concept ═══ -->
@@ -740,17 +790,12 @@
       </div>
     </section>
 
-    <!-- ═══ The Club (image break) ═══ -->
-    <section class="section-serve">
-      <div class="serve-left"></div>
-      <div class="serve-right">
-        <h2 class="serve-title anim anim-fade-up">The Club</h2>
-        <p class="serve-description anim anim-fade-up anim-delay-2">8000 SQM of sport, wellness, and lifestyle. World-class padel courts, a full gym and recovery zone, coworking with court views, and a social lounge — all under one roof in Dubai.</p>
-      </div>
-    </section>
-
     <!-- ═══ The Club ═══ -->
     <section class="section-club">
+      <div class="club-header">
+        <p class="club-label anim anim-fade-up">The Club</p>
+        <h2 class="club-heading anim anim-fade-up anim-delay-1">8000 SQM of Sport and<br>Lifestyle</h2>
+      </div>
       <div class="club-zones">
         <div class="zone anim anim-fade-up anim-delay-1">
           <p class="zone-number">01</p>
@@ -767,21 +812,6 @@
           <h3 class="zone-title">The Welcome</h3>
           <p class="zone-text">Reception and digital check-in. Premium changing rooms. Pro shop with rackets and branded merchandise. Coaching and academy office. Kids activity zone.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- ═══ Court Logo (maroon) ═══ -->
-    <section class="section-court">
-      <div class="court-lines">
-        <span class="court-line court-line--v court-line--left-1"></span>
-        <span class="court-line court-line--v court-line--left-2"></span>
-        <span class="court-line court-line--v court-line--right-1"></span>
-        <span class="court-line court-line--v court-line--right-2"></span>
-        <span class="court-line court-line--v court-line--center"></span>
-      </div>
-      <div class="court-content anim anim-fade-in">
-        <p class="court-label">The Club</p>
-        <span class="court-logo">More Than a Game</span>
       </div>
     </section>
 
@@ -820,7 +850,7 @@
     </section>
 
     <div class="photo-break">
-      <img src="img/top.png" alt="Padel court atmosphere">
+      <img src="img/pareja.png" alt="Padel court atmosphere">
     </div>
 
     <!-- ═══ Get in Touch ═══ -->
@@ -830,42 +860,6 @@
       <p class="contact-text anim anim-fade-up anim-delay-2">For partnerships, collaborations, work opportunities, or general enquiries — we'd love to hear from you.</p>
       <a href="mailto:hello@clubcourt.com" class="contact-email anim anim-fade-up anim-delay-3">hello@clubcourt.com</a>
     </section>
-
-    <div class="photo-break">
-      <img src="img/widephoto.png" alt="Clubcourt padel lifestyle">
-    </div>
-
-    <!-- ═══ Footer ═══ -->
-    <footer class="footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <p class="footer-col-title">Navigate</p>
-          <ul class="footer-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#about">About the club</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#">Sign up</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <p class="footer-col-title">Social</p>
-          <ul class="footer-links">
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Telegram</a></li>
-            <li><a href="#">WhatsApp</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <p class="footer-col-title">Contact</p>
-          <ul class="footer-links">
-            <li><a href="mailto:hello@clubcourt.com">hello@clubcourt.com</a></li>
-            <li><a href="#">Dubai, UAE</a></li>
-          </ul>
-          <p class="footer-tagline">Padel is the Game</p>
-          <p class="footer-copy">&copy; 2026 Clubcourt</p>
-        </div>
-      </div>
-    </footer>
 
   </div>
 
@@ -882,6 +876,24 @@
   document.querySelectorAll('.anim').forEach(function (el) {
     observer.observe(el);
   });
+
+  (function () {
+    var wrapper = document.querySelector('.logo-wrapper');
+    var threshold = window.innerHeight * 0.15;
+
+    function update() {
+      if (window.scrollY < threshold) {
+        wrapper.classList.add('at-hero');
+        wrapper.classList.remove('at-nav');
+      } else {
+        wrapper.classList.remove('at-hero');
+        wrapper.classList.add('at-nav');
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
 </script>
 </body>
 </html>
